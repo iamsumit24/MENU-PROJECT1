@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live HTML Interpreter</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0d0d0d; /* Dark background for hacker theme */
+            color: #00ff00; /* Neon green text color */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hide overflow to keep animation clean */
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #00ff00;
+            color: #0d0d0d;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 255, 0, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+        }
+
+        /* Home button styles */
+        .home-btn {
+            background-color: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            padding: 8px 16px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 255, 0, 0.7);
+        }
+
+        .home-btn:hover {
+            background-color: #00ff00;
+            color: #0d0d0d;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 40px); /* Adjust for header height */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .editor-container {
+            display: flex;
+            flex: 1;
+            background-color: #1e1e1e;
+        }
+
+        .editor {
+            flex: 1;
+            padding: 20px;
+            border-right: 2px solid #00ff00;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background-color: #0d0d0d;
+            color: #00ff00;
+            border-radius: 5px;
+            font-size: 16px;
+            line-height: 1.5;
+            white-space: pre; /* Preserve formatting */
+        }
+
+        .output {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background-color: #0d0d0d;
+            color: #00ff00;
+            border-radius: 5px;
+            border: 2px solid #00ff00;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Waves animation */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: rgba(0, 255, 0, 0.3);
+            animation: waveAnimation 10s linear infinite;
+            opacity: 0.6;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+        }
+
+        @keyframes waveAnimation {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Live HTML Interpreter</h1>
+        <button class="home-btn" onclick="goToHome()">Home</button>
+    </div>
+
+    <!-- Waves animation -->
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="editor-container">
+            <div class="editor" contenteditable="true" id="htmlInput">
+                <!-- Initial HTML content -->
+            </div>
+            <div class="output" id="htmlOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update output with user input HTML
+        function updateOutput() {
+            var htmlInput = document.getElementById('htmlInput').innerText;
+            var htmlOutput = document.getElementById('htmlOutput');
+            htmlOutput.innerHTML = htmlInput;
+        }
+
+        // Update output on input change
+        document.getElementById('htmlInput').addEventListener('input', updateOutput);
+
+        // Function to navigate to Home page
+        function goToHome() {
+            window.location.href = "index.html"; // Change index.html to your home page
+        }
+    </script>
+</body>
+</html>

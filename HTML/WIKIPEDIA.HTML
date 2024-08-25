@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wikipedia Viewer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #6a11cb, #2575fc); /* Updated gradient background */
+            background-size: 200% 200%;
+            animation: gradientBG 20s linear infinite;
+            margin: 0;
+            overflow: hidden;
+            color: #ffafbd; /* Light pink text */
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+            border-bottom: 1px solid #ffafbd; /* Light pink border */
+        }
+
+        .home-button {
+            background-color: #ff512f; /* Bright orange */
+            color: #ffffff; /* White text */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(255, 81, 47, 0.5); /* Glowing orange shadow */
+        }
+
+        .home-button:hover {
+            background-color: #ffafbd; /* Light pink on hover */
+            transform: scale(1.1); /* Slightly enlarges the button */
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8); /* Dark background */
+            backdrop-filter: blur(5px); /* Slight blur */
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(255, 175, 189, 0.3); /* Soft pink shadow */
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+            margin-top: 70px; /* Space for the top bar */
+            animation: slideIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ffafbd; /* Light pink */
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ffafbd; /* Glowing effect */
+        }
+
+        #searchInput {
+            width: 80%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ffafbd; /* Pink border */
+            border-radius: 10px;
+            background-color: #000; /* Black background */
+            color: #ffafbd; /* Light pink text */
+        }
+
+        #searchInput:focus {
+            background-color: #333; /* Darker background on focus */
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            background-color: #ff512f; /* Bright orange */
+            color: #fff; /* White text */
+            box-shadow: 0 4px 6px rgba(255, 81, 47, 0.5); /* Glowing orange shadow */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ffafbd; /* Light pink on hover */
+            transform: scale(1.1); /* Slightly enlarges the button */
+        }
+
+        #content {
+            margin-top: 20px;
+            text-align: left;
+            color: #ffafbd; /* Light pink */
+        }
+
+        #content a {
+            color: #ffafbd; /* Light pink */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-bar">
+        <button class="home-button" onclick="window.location.href='index.html'">Home</button>
+    </div>
+    <div class="container">
+        <h1>Wikipedia Reader</h1>
+        <input type="text" id="searchInput" placeholder="Enter a topic">
+        <button onclick="searchWikipedia()">Search</button>
+        <button id="startButton" onclick="startReading()" disabled>Start</button>
+        <button id="stopButton" onclick="stopReading()">Stop</button>
+        <div id="content"></div>
+    </div>
+    <script>
+        let synth;
+        let utterance;
+        let isReading = false;
+
+        function searchWikipedia() {
+            const query = document.getElementById('searchInput').value;
+            if (!query) {
+                alert('Please enter a topic');
+                return;
+            }
+
+            const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.extract) {
+                        document.getElementById('content').innerHTML = `
+                            <h2>${data.title}</h2>
+                            <p>${data.extract}</p>
+                            <a href="${data.content_urls.desktop.page}" target="_blank">Read more on Wikipedia</a>
+                        `;
+                        document.getElementById('startButton').disabled = false;
+                    } else {
+                        document.getElementById('content').innerHTML = '<p>No results found</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('content').innerHTML = '<p>Error fetching data</p>';
+                });
+        }
+
+        function speakText(text) {
+            synth = window.speechSynthesis;
+            utterance = new SpeechSynthesisUtterance(text);
+            synth.speak(utterance);
+        }
+
+        function startReading() {
+            const extract = document.querySelector('#content p').textContent;
+            speakText(extract);
+            isReading = true;
+            document.getElementById('startButton').disabled = true;
+            document.getElementById('stopButton').disabled = false;
+        }
+
+        function stopReading() {
+            synth.cancel();
+            isReading = false;
+            document.getElementById('startButton').disabled = false;
+            document.getElementById('stopButton').disabled = true;
+        }
+
+        utterance.onend = function () {
+            if (isReading) {
+                startReading();
+            }
+        };
+    </script>
+</body>
+
+</html>
