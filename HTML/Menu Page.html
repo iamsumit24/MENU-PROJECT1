@@ -6,95 +6,88 @@
     <title>Menu Page</title>
     <style>
         body {
-            background: radial-gradient(circle, #6a11cb, #2575fc); /* Purple to blue gradient */
-            background-size: 200% 200%;
-            animation: gradient 20s linear infinite;
-            font-family: 'Courier New', Courier, monospace;
-            color: #ffafbd; /* Light pink text color */
+            background: linear-gradient(180deg, #2c3e50, #34495e); /* Dark blue gradient */
+            font-family: 'Verdana', sans-serif;
+            color: #ecf0f1; /* Light grey text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
-        @keyframes gradient {
-            0% {
-                background-position: 0% 0%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            100% {
-                background-position: 0% 0%;
-            }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ecf0f1; /* Light grey text color for the header */
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
 
         .button-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            grid-gap: 15px;
+            gap: 20px;
             padding: 20px;
         }
 
         .button {
-            background-color: #ff512f; /* Bright orange background */
+            background-color: #e74c3c; /* Red background */
             color: #ffffff; /* White text color */
             padding: 15px;
-            border: 2px solid #ff512f; /* Orange border */
-            border-radius: 8px;
-            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
             cursor: pointer;
-            text-align: center;
             transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .button:hover {
-            background-color: #ffafbd; /* Light pink background on hover */
-            color: #ff512f; /* Orange text color on hover */
+            background-color: #c0392b; /* Darker red on hover */
             transform: scale(1.05); /* Slightly enlarge button on hover */
         }
 
-        h1 {
-            text-align: center;
-            color: #ffafbd; /* Light pink text color */
-            font-size: 2em;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        center {
-            display: block;
+        .button:active {
+            transform: scale(0.95); /* Slightly shrink button on click */
         }
     </style>
 </head>
 <body>
-    <center>
+    <div class="container">
         <h1>Welcome to Sumit's Menu Project</h1>
-    </center>
-    <div class="button-container">
-        <button class="button" onclick="window.location.href='geolocation.html'">Geolocation</button>
-        <button class="button" onclick="window.location.href='googlesearch.html'">Search Top 5</button>
-        <button class="button" onclick="window.location.href='liveinterpreter.html'">Live Html Interpreter</button>
-        <button class="button" onclick="window.location.href='pythonsms.html'">Send Sms</button>
-        <button class="button" onclick="window.location.href='bulk_email.html'">Bulk E-mail</button>
-        <button class="button" onclick="window.location.href='speechtotext.html'">Speech to Text</button>
-        <button class="button" onclick="window.location.href='gnome.html'">Gnome</button>
-        <button class="button" onclick="window.location.href='linux.html'">Linux Terminal</button>
-        <button class="button" onclick="window.location.href='cam_live.html'">Camera Live</button>
-        <button class="button" onclick="window.location.href='capture.html'">Capture Image</button>
-        <button class="button" onclick="window.location.href='draganddrop.html'">Drag and Drop</button>
-        <button class="button" onclick="window.location.href='chatbot.html'">AI Bot</button>
-        <button class="button" onclick="window.location.href='docker.html'">My Docker</button>
-        <button class="button" onclick="window.location.href='js_camera.html'">My Camera</button>
-        <button class="button" onclick="window.location.href='send_whatsapp.html'">Send Whatsapp</button>
-        <button class="button" onclick="window.location.href='voicetovoice.html'">Voice Recorder</button>
-        <button class="button" onclick="window.location.href='text_to_speech.html'">Text to Speech</button>
-        <button class="button" onclick="window.location.href='social_media.html'">Social Media</button>
-        <button class="button" onclick="window.location.href='ec2.html'">Launch EC2 Instance</button>
-        <button class="button" onclick="window.location.href='create_iam.html'">Create IAM user</button>
-        <button class="button" onclick="window.location.href='s3_bucket.html'">Create S3 Bucket</button>
-        <button class="button" onclick="window.location.href='snake_game.html'">Snake Game</button>
-        <button class="button" onclick="window.location.href='wikipedia_reader.html'">Wikipedia Reader</button>
-        <button class="button" onclick="window.location.href='googleclone.html'">Google Search</button>
-        <button class="button" onclick="window.location.href='password_form.html'">Password Generator</button>
-        <button class="button" onclick="window.location.href='ssh_linux.html'">SSH Command Executor</button>
-        <button class="button" onclick="window.location.href='music_player.html'">Creator Player</button>
+        <div class="button-container">
+            <a href="geolocation.html" class="button">Geolocation</a>
+            <a href="googlesearch.html" class="button">Search Top 5</a>
+            <a href="liveinterpreter.html" class="button">Live Html Interpreter</a>
+            <a href="pythonsms.html" class="button">Send Sms</a>
+            <a href="bulk_email.html" class="button">Bulk E-mail</a>
+            <a href="speechtotext.html" class="button">Speech to Text</a>
+            <a href="gnome.html" class="button">Gnome</a>
+            <a href="linux.html" class="button">Linux Terminal</a>
+            <a href="cam_live.html" class="button">Camera Live</a>
+            <a href="capture.html" class="button">Capture Image</a>
+            <a href="draganddrop.html" class="button">Drag and Drop</a>
+            <a href="chatbot.html" class="button">AI Bot</a>
+            <a href="js_camera.html" class="button">My Camera</a>
+            <a href="send_whatsapp.html" class="button">Send Whatsapp</a>
+            <a href="voicetovoice.html" class="button">Voice Recorder</a>
+            <a href="text_to_speech.html" class="button">Text to Speech</a>
+            <a href="social_media.html" class="button">Social Media</a>
+            <a href="ec2.html" class="button">Launch EC2 Instance</a>
+            <a href="create_iam.html" class="button">Create IAM user</a>
+            <a href="s3_bucket.html" class="button">Create S3 Bucket</a>
+            <a href="snake_game.html" class="button">Snake Game</a>
+            <a href="wikipedia_reader.html" class="button">Wikipedia Reader</a>
+            <a href="googleclone.html" class="button">Google Search</a>
+            <a href="music_player.html" class="button">Sumit's Player</a>
+        </div>
     </div>
 </body>
 </html>
